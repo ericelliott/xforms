@@ -1,0 +1,29 @@
+{
+  "name": "xforms",
+  "version": "1.0.0",
+  "description": "Modular transducer library",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . && echo 'Lint complete.'",
+    "test": "node source/index.test.js",
+    "debug-test": "node --inspect-brk source/index.test.js",
+    "watch": "watch 'clear && npm run -s test' source"
+  },
+  "keywords": [
+    "Transducers",
+    "Functional",
+    "Reducer",
+    "Reducers",
+    "Reduce"
+  ],
+  "author": "Eric Elliott",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "4.8.0",
+    "riteway": "2.0.1",
+    "watch": "1.0.2"
+  },
+  "dependencies": {
+    "lodash": "4.17.4"
+  }
+}
