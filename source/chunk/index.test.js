@@ -133,18 +133,18 @@ describe('chunk', async should => {
       given: 'a group not evenly divisible by the chunk size',
       should: 'chunk sequence into n pieces where n = Math.ceil(length/chunk size)',
       actual,
-      expected: Math.ceil((arr.length / size))
+      expected: Math.ceil(arr.length / size)
     });
   }
 
   {
-    const arrayLength = 12;
-    const length = 7;
+    const length = 12;
+    const filter = 7;
     const size = 3;
-    const arr = Array.from({arrayLength}, (x, i) => i + 1);
+    const arr = Array.from({ length }, (x, i) => i + 1);
 
     const xform = compose(
-      take(length),
+      take(filter),
       chunk(size)
     );
 
@@ -152,19 +152,19 @@ describe('chunk', async should => {
 
     assert({
       given: 'a filtered group not evenly divisible by the chunk size',
-      should: 'chunk sequence into n pieces where n = Math.ceil(length/chunk size)',
+      should: 'chunk sequence into n pieces where n = Math.ceil(filtered size/chunk size)',
       actual,
-      expected: Math.ceil((arr.length / size))
+      expected: Math.ceil((filter / size))
     });
   }
 
   {
-    const arrayLength = 12;
-    const length = 9;
+    const length = 12;
     const size = 3;
-    const arr = Array.from({arrayLength}, (x, i) => i + 1);
+    const filter = 9;
+    const arr = Array.from({length}, (x, i) => i + 1);
     const xform = compose(
-      take(length),
+      take(filter),
       chunk(size)
     );
 
@@ -172,9 +172,9 @@ describe('chunk', async should => {
 
     assert({
       given: 'a filtered group is evenly divisible by the chunk size',
-      should: 'chunk sequence into n pieces where n = length/chunk size',
+      should: 'chunk sequence into n pieces where n = filter size/chunk size',
       actual,
-      expected: arr.length / size
+      expected: filter / size
     });
   }
 
