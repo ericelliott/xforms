@@ -32,14 +32,14 @@ describe('chunk', async should => {
 
     assert({
       given: 'negative size',
-      should: 'include zero chunks',
+      should: 'include a zero-length chunk',
       actual,
-      expected: []
+      expected: [ [] ]
     });
   }
 
   {
-    const length = 3;
+    const length = 30;
     const size = 0;
     const arr = Array.from({length}, (x, i) => i + 1);
 
@@ -47,9 +47,9 @@ describe('chunk', async should => {
 
     assert({
       given: 'chunk size = 0',
-      should: 'include zero chunks',
+      should: 'include a zero-length chunk',
       actual,
-      expected: []
+      expected: [ [] ]
     });
   }
 
@@ -57,10 +57,10 @@ describe('chunk', async should => {
     const input = [1, 2, 3, 4, 5, 6, 7, 8];
 
     assert({
-      given: 'chunk size 0',
+      given: 'chunk size = 0',
       should: 'obey empty law with signal passing',
       actual: toArray(compose(take(7), chunk(0)), input),
-      expected: []
+      expected: [ [] ]
     });
   }
 
@@ -177,4 +177,5 @@ describe('chunk', async should => {
       expected: arr.length / size
     });
   }
+
 });
