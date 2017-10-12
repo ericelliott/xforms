@@ -1,10 +1,21 @@
 const { describe } = require('riteway');
-//const compose = require('lodash/fp/compose');
 const drop = require('./index.js');
 const toArray = require('../to-array');
 
 describe('drop', async should => {
   const { assert } = should('drop every x frame');
+
+  {
+    const xform = drop(2);
+    const step = (x = []) => x;
+
+    assert({
+      given: 'No arguments -- array type',
+      should: 'return empty initial state',
+      actual: xform(step)(),
+      expected: []
+    });
+  }
 
   {
     const length = 12;
