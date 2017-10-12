@@ -1,7 +1,7 @@
 const chunk = size => step => {
   let buffer = [];
 
-  const maybePush = (a, buffer, c) => {
+  const maybePush = (buffer, c) => {
     if (size >= 1) buffer.push(c);
   };
 
@@ -11,13 +11,13 @@ const chunk = size => step => {
       (a.isReduced || i + 1 === foldable.length) ||
       buffer.length + 1 === size
     ) {
-      maybePush(a, buffer, c);
+      maybePush(buffer, c);
       const res = step(a, buffer, i, foldable);
       buffer = [];
       return res;
     }
 
-    maybePush(a, buffer, c);
+    maybePush(buffer, c);
     return a;
   };
 };
