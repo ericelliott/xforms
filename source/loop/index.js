@@ -1,11 +1,14 @@
-const reduced = require('../reduced');
-
 const loop = limit => step => {
   let buffer = [];
   let b = 0;
 
-  return function repeat (a, c, i, foldable) {
-    debugger;
+  return function repeat (...args) {
+
+    const [ a = step(), c, i, foldable ] = args;
+
+    if (args.length === 0) {
+      return a;
+    }
 
     const isLooping = a.isReduced || (i >= foldable.length - 1);
     a = a.valueOf();
