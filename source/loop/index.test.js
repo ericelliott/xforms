@@ -2,7 +2,7 @@ const { describe } = require('riteway');
 
 const concatArray = require('../concat-array');
 const compose = require('../compose');
-//const toArray = require('../to-array');
+const toArray = require('../to-array');
 
 const loop = require('../loop');
 
@@ -15,27 +15,23 @@ describe('loop', async should => {
     );
 
     assert({
-      given: 'no arguments, short array',
+      given: 'concatArray and no arguments',
       actual: xform(concatArray)(),
       expected: []
     });
   }
 
-  /*
   {
     const arr = [1, 2, 3];
     const xform = compose(
       loop(10)
     );
 
-    console.log(toArray(xform, arr));
-
     assert({
       given: 'no arguments, short array',
-      actual: false,
+      actual: toArray(xform, arr),
       expected: [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
     });
   }
-  */
 
 });
