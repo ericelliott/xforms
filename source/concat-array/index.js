@@ -1,3 +1,12 @@
-const concatArray = (a, c) => a.valueOf().concat([c]);
+const concatArray = (...args) => {
+
+  const [ a = [], c ] = args;
+
+  if (args.length < 2) {
+    return a;
+  }
+
+  return a.valueOf().concat([c]);
+};
 
 module.exports = concatArray;

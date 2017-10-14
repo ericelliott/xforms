@@ -1,12 +1,22 @@
 const { describe } = require('riteway');
 const compose = require('lodash/fp/compose');
 
+const concatArray = require('../concat-array');
 const toArray = require('../to-array');
 const take = require('../take');
 const chunk = require('../chunk');
 
 describe('chunk', async should => {
   const { assert } = should('chunk sequences into smaller groups');
+
+  {
+    assert({
+      given: 'no arguments',
+      should: 'return an initial value',
+      actual: chunk(2)(concatArray)(),
+      expected: [ [] ]
+    });
+  }
 
   {
     const length = 3;
@@ -22,6 +32,7 @@ describe('chunk', async should => {
       expected: [arr]
     });
   }
+
 
   {
     const length = 3;
