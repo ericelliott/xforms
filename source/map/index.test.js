@@ -10,32 +10,31 @@ describe('map', async should => {
   const { assert } = should('apply a function in transducer context');
 
   {
-    const initialState = 'Anonymous';
-    const getName = ({ name = initialState } = {}) => name;
-    const xform = map(getName);
-    const step = (a = initialState) => a;
+    const reducer = map(x => x)(concatArray);
 
     assert({
-      given: 'returned reducer with no arguments Object -> String',
-      should: 'return empty initial state',
-      actual: xform(step)(),
-      expected: initialState
+      given: '[empty arity] concatArray',
+      should: 'return an empty array',
+      actual: reducer(),
+      expected: []
     });
   }
 
   {
-    const initialState = 0;
-    const xform = map((a, c) => a + c);
-    const step = (a = initialState) => a;
+    const arr = [1, 2, 3, 4, 5, 6];
+    const length = 3;
+    const xform = compose(
+      take(length),
+      map(x => x * 2)
+    );
 
     assert({
-      given: 'returned reducer with no arguments: Number -> Number',
-      should: 'return empty initial state',
-      actual: xform(step)(),
-      expected: initialState
+      given: '[completion arity] a reduced value',
+      should: 'behave correctly',
+      actual: transduce(xform, concatArray, [], arr),
+      expected: [2, 4, 6]
     });
   }
-
 
   {
     const arr = [1, 2, 3];
@@ -44,7 +43,7 @@ describe('map', async should => {
     );
 
     assert({
-      given: 'A simple collection',
+      given: '[transducer arity] a simple collection',
       should: 'return correctly mapped elements',
       actual: transduce(xform, concatArray, [], arr),
       expected: [2, 4, 6]
@@ -76,22 +75,6 @@ describe('map', async should => {
       should: 'be equivalent to original value',
       actual: transduce(idXform, concatArray, [], arr),
       expected: arr
-    });
-  }
-
-  {
-    const arr = [1, 2, 3, 4, 5, 6];
-    const length = 3;
-    const xform = compose(
-      take(length),
-      map(x => x * 2)
-    );
-
-    assert({
-      given: 'Filtered collection',
-      should: 'behave correctly',
-      actual: transduce(xform, concatArray, [], arr),
-      expected: [2, 4, 6]
     });
   }
 });
