@@ -7,7 +7,7 @@ describe('concatArray', async should => {
   {
     assert({
       given: 'no arguments',
-      should: 'an empty array',
+      should: 'return an empty array',
       actual: concatArray(),
       expected: []
     });
@@ -18,7 +18,7 @@ describe('concatArray', async should => {
 
     assert({
       given: 'an array',
-      should: 'the original array',
+      should: 'return the original array',
       actual: concatArray(arr),
       expected: arr
     });
@@ -30,7 +30,7 @@ describe('concatArray', async should => {
 
     assert({
       given: 'an array',
-      should: 'the original array plus an additional value of undefined',
+      should: 'return the original array plus an additional value of undefined',
       actual: concatArray(arr, undefined),
       expected: [ ...arr, undefined ]
     });
@@ -39,7 +39,7 @@ describe('concatArray', async should => {
   {
     assert({
       given: 'undefined and undefined',
-      should: 'an array containing undefined',
+      should: 'return an array containing undefined',
       actual: concatArray(undefined, undefined),
       expected: [ undefined ]
     });
@@ -50,10 +50,9 @@ describe('concatArray', async should => {
 
     assert({
       given: 'undefined and an array',
-      should: 'an array containing the passed array',
+      should: 'return an array containing the passed array',
       actual: concatArray(undefined, arr),
       expected: [ arr ]
     });
   }
-
 });
