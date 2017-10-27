@@ -6,7 +6,7 @@ describe('concatArray', async should => {
 
   {
     assert({
-      given: 'no arguments',
+      given: '[initial arity]',
       should: 'return an empty array',
       actual: concatArray(),
       expected: []
@@ -17,8 +17,8 @@ describe('concatArray', async should => {
     const arr = [ 1, 2, 3 ];
 
     assert({
-      given: 'an array',
-      should: 'return the original array',
+      given: '[completion arity]',
+      should: 'return the completed array',
       actual: concatArray(arr),
       expected: arr
     });
@@ -29,19 +29,10 @@ describe('concatArray', async should => {
     const arr = [ 1, 2, 3 ];
 
     assert({
-      given: 'an array',
-      should: 'return the original array plus an additional value of undefined',
+      given: 'array, undefined',
+      should: 'return the array with undefined at the end',
       actual: concatArray(arr, undefined),
       expected: [ ...arr, undefined ]
-    });
-  }
-
-  {
-    assert({
-      given: 'undefined and undefined',
-      should: 'return an array containing undefined',
-      actual: concatArray(undefined, undefined),
-      expected: [ undefined ]
     });
   }
 
@@ -49,10 +40,22 @@ describe('concatArray', async should => {
     const arr = [ 1, 2, 3 ];
 
     assert({
-      given: 'undefined and an array',
+      given: 'an empty array, and a array of values',
       should: 'return an array containing the passed array',
-      actual: concatArray(undefined, arr),
+      actual: concatArray([], arr),
       expected: [ arr ]
+    });
+  }
+
+  {
+    const a = [ [1], [2], [3] ];
+    const b = [4];
+
+    assert({
+      given: 'two arrays with values',
+      should: 'return an array containing the passed array',
+      actual: concatArray(a, b),
+      expected: [ ...a, b ]
     });
   }
 });

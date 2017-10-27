@@ -5,6 +5,8 @@ const map = require('../map');
 const transduce = require('../transduce');
 const concatArray = require('../concat-array');
 const take = require('../take');
+const reduced = require('../reduced');
+const toArray = require('../to-array');
 
 describe('map', async should => {
   const { assert } = should('apply a function in transducer context');
@@ -13,42 +15,69 @@ describe('map', async should => {
     const reducer = map(x => x)(concatArray);
 
     assert({
-      given: '[empty arity] concatArray',
-      should: 'return an empty array',
+      given: '[empty arity]',
+      should: 'return the initial value',
       actual: reducer(),
       expected: []
     });
   }
 
   {
-    const arr = [1, 2, 3, 4, 5, 6];
-    const length = 3;
-    const xform = compose(
-      take(length),
-      map(x => x * 2)
-    );
+    const arr = [1, 2, 3];
+
+    const reducer = map(x => x)(concatArray);
 
     assert({
-      given: '[completion arity] a reduced value',
-      should: 'behave correctly',
-      actual: transduce(xform, concatArray, [], arr),
-      expected: [2, 4, 6]
+      given: '[completion arity]',
+      should: 'return the reduced value',
+      actual: reducer(arr),
+      expected: arr
     });
   }
 
   {
-    const arr = [1, 2, 3];
+    const arr = [2, 4, 6];
+
+    const reducer = map(x => x * 2)(concatArray);
+
+    assert({
+      given: '[transducer arity]',
+      should: 'return the transformed result',
+      actual: reducer(arr, 4),
+      expected: [2, 4, 6, 8]
+    });
+  }
+
+  {
+    const arr = [2, 4, 6];
+    const reducedArr = reduced(arr);
+
+    const reducer = map(x => x * 2)(concatArray);
+
+    assert({
+      given: 'reduced with a final value',
+      should: 'return the final result',
+      actual: reducer(reducedArr, 4),
+      expected: [2, 4, 6, 8]
+    });
+  }
+
+  {
+    const arr = [1, 2, 3, 4, 5, 6];
+
     const xform = compose(
+      take(3),
       map(x => x * 2)
     );
 
     assert({
-      given: '[transducer arity] a simple collection',
-      should: 'return correctly mapped elements',
-      actual: transduce(xform, concatArray, [], arr),
+      given: 'a composition with a completing transducer',
+      should: 'map up to completion',
+      actual: toArray(xform, arr),
       expected: [2, 4, 6]
     });
   }
+
 
   const g = n => n + 1;
   const f = n => n * 2;
