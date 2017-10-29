@@ -7,7 +7,8 @@
     "lint": "eslint . && echo 'Lint complete.'",
     "test": "node source/index.test.js && npm run -s lint",
     "debug-test": "node --inspect-brk source/index.test.js",
-    "watch": "watch 'clear && npm run -s test' source"
+    "watch": "watch 'clear && npm run -s test' source",
+    "update": "updtr"
   },
   "keywords": [
     "Transducers",
@@ -19,8 +20,9 @@
   "author": "Eric Elliott",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "4.8.0",
-    "riteway": "2.0.1",
+    "eslint": "4.10.0",
+    "riteway": "2.0.3",
+    "updtr": "2.0.0",
     "watch": "1.0.2"
   },
   "dependencies": {
