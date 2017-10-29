@@ -1,41 +1,65 @@
 const { describe } = require('riteway');
-const compose = require('lodash/fp/compose');
 
 const filter = require('../filter');
-const transduce = require('../transduce');
+const toArray = require('../to-array');
 const concatArray = require('../concat-array');
 
 describe('filter', async should => {
   const { assert } = should('should select values matching predicate');
 
   {
-    const initialState = false;
-    const is2 = (x = 0) => x === 2;
-    const xform = compose(
-      v => {
-        return v;
-      },
-      filter(is2)
-    );
-    const step = (x = initialState) => x;
+    const reducer = filter(() => true)(concatArray);
 
     assert({
-      given: 'No arguments -- number type',
-      should: 'return empty initial state',
-      actual: xform(step)(),
-      expected: false
+      given: '[empty arity]',
+      should: 'return the empty value',
+      actual: reducer(),
+      expected: []
     });
   }
 
   {
-    const arr = [1, 2, 3, 4, 5, 6];
-    const xform = filter(x => x % 2 === 0);
+    const a = [1, 2, 3];
+    const reducer = filter(() => true)(concatArray);
 
     assert({
-      given: 'isEven',
-      should: 'select only even values',
-      actual: transduce(xform, concatArray, [], arr),
+      given: '[completion arity]',
+      should: 'return the accumulator',
+      actual: reducer(a),
+      expected: a
+    });
+  }
+
+  {
+    const a = [2, 4, 6];
+    const even = 8;
+    const odd = 7;
+    const reducer = filter(x => x % 2 === 0)(concatArray);
+
+    assert({
+      given: '[transducer arity] isEven with even value',
+      should: 'concat the even value',
+      actual: reducer(a, even),
+      expected: [2, 4, 6, 8]
+    });
+
+    assert({
+      given: '[transducer arity] isEven with odd value',
+      should: 'reject the odd value',
+      actual: reducer(a, odd),
       expected: [2, 4, 6]
+    });
+  }
+
+  {
+    const arr = [1, 2, 3, 4, 5];
+    const xform = filter(x => x >= 3);
+
+    assert({
+      given: 'predicate',
+      should: 'select only values matching predicate',
+      actual: toArray(xform, arr),
+      expected: [3, 4, 5]
     });
   }
 
@@ -46,7 +70,7 @@ describe('filter', async should => {
     assert({
       given: 'x => true',
       should: 'select all values',
-      actual: transduce(xform, concatArray, [], arr),
+      actual: toArray(xform, arr),
       expected: arr
     });
   }
@@ -58,7 +82,7 @@ describe('filter', async should => {
     assert({
       given: 'x => false',
       should: 'select zero values',
-      actual: transduce(xform, concatArray, [], arr),
+      actual: toArray(xform, arr),
       expected: []
     });
   }
