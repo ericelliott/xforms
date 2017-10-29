@@ -1,5 +1,7 @@
 const { describe } = require('riteway');
+
 const concatArray = require('../concat-array/index.js');
+const reduced = require('../reduced');
 
 describe('concatArray', async should => {
   const { assert } = should('concat arrays and values');
@@ -24,6 +26,27 @@ describe('concatArray', async should => {
     });
   }
 
+  {
+    const arr = [ 1, 2, 3 ];
+
+    assert({
+      given: '[completion arity] reduced(acc)',
+      should: 'return the completed array',
+      actual: concatArray(reduced(arr)),
+      expected: arr
+    });
+  }
+
+  {
+    const a = [1, 2, 3];
+
+    assert({
+      given: 'reduced(accumulator), finalValue',
+      should: 'add the final value to the accumulated value',
+      actual: concatArray(reduced(a), 4),
+      expected: [1, 2, 3, 4]
+    });
+  }
 
   {
     const arr = [ 1, 2, 3 ];
