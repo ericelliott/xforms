@@ -5,16 +5,19 @@ const concatArray = require('../concat-array');
 const toArray = require('../to-array');
 const take = require('../take');
 const chunk = require('../chunk');
+const reduced = require('../reduced');
 
 describe('chunk', async should => {
   const { assert } = should('chunk sequences into smaller groups');
 
   {
+    const reducer = chunk(2)(concatArray);
+
     assert({
-      given: 'no arguments',
+      given: '[initial arity] no arguments',
       should: 'return an initial value',
-      actual: chunk(2)(concatArray)(),
-      expected: [ [] ]
+      actual: reducer(),
+      expected: []
     });
   }
 
@@ -43,9 +46,31 @@ describe('chunk', async should => {
 
     assert({
       given: 'negative size',
-      should: 'include a zero-length chunk',
+      should: 'result in an empty collection',
       actual,
-      expected: [ [] ]
+      expected: []
+    });
+  }
+
+  {
+    const a = [];
+    const x = 20;
+    const step = (...args) => () => args;
+    const reducer = chunk(0)(step);
+    const wasCalledWith = reducer(reduced(a), x)();
+
+    assert({
+      given: 'chunk size = 0, empty accumulator, new input',
+      should: 'call completion step with reduced([])',
+      actual: wasCalledWith[0].toString(),
+      expected: reduced(a).toString()
+    });
+
+    assert({
+      given: 'chunk size = 0, empty accumulator, new input',
+      should: 'not pass an empty chunk in completion step',
+      actual: wasCalledWith.length,
+      expected: 1
     });
   }
 
@@ -58,20 +83,9 @@ describe('chunk', async should => {
 
     assert({
       given: 'chunk size = 0',
-      should: 'include a zero-length chunk',
+      should: 'return an empty collection',
       actual,
-      expected: [ [] ]
-    });
-  }
-
-  {
-    const input = [1, 2, 3, 4, 5, 6, 7, 8];
-
-    assert({
-      given: 'chunk size = 0',
-      should: 'obey empty law with signal passing',
-      actual: toArray(compose(take(7), chunk(0)), input),
-      expected: [ [] ]
+      expected: []
     });
   }
 
@@ -138,34 +152,32 @@ describe('chunk', async should => {
     const size = 3;
     const arr = Array.from({length}, (x, i) => i + 1);
 
-    const actual = toArray(chunk(size), arr).length;
-
     assert({
       given: 'a group not evenly divisible by the chunk size',
       should: 'chunk sequence into n pieces where n = Math.ceil(length/chunk size)',
-      actual,
-      expected: Math.ceil(arr.length / size)
+      actual: toArray(chunk(size), arr),
+      expected: [[1, 2, 3], [4, 5, 6], [7]]
     });
   }
 
   {
     const length = 12;
-    const filter = 7;
+    const filtered = 7;
     const size = 3;
     const arr = Array.from({ length }, (x, i) => i + 1);
 
     const xform = compose(
-      take(filter),
+      take(filtered),
       chunk(size)
     );
 
-    const actual = toArray(xform, arr).length;
+    const actual = toArray(xform, arr).valueOf();
 
     assert({
       given: 'a filtered group not evenly divisible by the chunk size',
       should: 'chunk sequence into n pieces where n = Math.ceil(filtered size/chunk size)',
       actual,
-      expected: Math.ceil((filter / size))
+      expected: [[1, 2, 3], [4, 5, 6], [7]]
     });
   }
 
@@ -174,19 +186,19 @@ describe('chunk', async should => {
     const size = 3;
     const filter = 9;
     const arr = Array.from({length}, (x, i) => i + 1);
+    const expected = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
     const xform = compose(
       take(filter),
       chunk(size)
     );
 
-    const actual = toArray(xform, arr).length;
+    const actual = toArray(xform, arr);
 
     assert({
       given: 'a filtered group is evenly divisible by the chunk size',
       should: 'chunk sequence into n pieces where n = filter size/chunk size',
       actual,
-      expected: filter / size
+      expected
     });
   }
-
 });

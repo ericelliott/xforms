@@ -2,7 +2,6 @@ const { describe } = require('riteway');
 const compose = require('lodash/fp/compose');
 
 const map = require('../map');
-const transduce = require('../transduce');
 const concatArray = require('../concat-array');
 const take = require('../take');
 const reduced = require('../reduced');
@@ -90,8 +89,8 @@ describe('map', async should => {
     assert({
       given: 'Composition law: compose(map(g), map(f))',
       should: 'be equivalent to map(compose(f, g))',
-      actual: transduce(fa, concatArray, [], arr),
-      expected: transduce(fb, concatArray, [], arr)
+      actual: toArray(fa, arr),
+      expected: toArray(fb, arr)
     });
   }
 
@@ -102,7 +101,7 @@ describe('map', async should => {
     assert({
       given: 'Identity law: x => x',
       should: 'be equivalent to original value',
-      actual: transduce(idXform, concatArray, [], arr),
+      actual: toArray(idXform, arr),
       expected: arr
     });
   }

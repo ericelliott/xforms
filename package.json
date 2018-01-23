@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . && echo 'Lint complete.'",
-    "test": "node source/index.test.js",
+    "test": "node source/index.test.js && npm run -s lint",
     "debug-test": "node --inspect-brk source/index.test.js",
     "watch": "watch 'clear && npm run -s test' source"
   },

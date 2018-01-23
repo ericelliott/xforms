@@ -2,11 +2,17 @@ const concatArray = (...args) => {
 
   const [ a = [], c ] = args;
 
-  if (args.length < 2) {
-    return a;
-  }
+  return args.length === 0 ?
+    // initial
+    a :
+    args.length === 1 ?
 
-  return a.valueOf().concat([c]);
+    // completion
+    a.valueOf() :
+
+    // reducer
+    a.valueOf().concat([c])
+  ;
 };
 
 module.exports = concatArray;
