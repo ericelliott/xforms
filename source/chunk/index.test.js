@@ -16,7 +16,7 @@ describe('chunk', async should => {
     assert({
       given: '[initial arity] no arguments',
       should: 'return an initial value',
-      actual: reducer(),
+      actual: reducer().toString(),
       expected: []
     });
   }

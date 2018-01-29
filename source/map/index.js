@@ -1,12 +1,10 @@
-const map = f => step => (...args) => {
-  const [a = step(), c, ...rest] = args;
+const transducer = require('../transducer');
 
-  return args.length === 0 ?
-    a :                      // empty arity
-    args.length === 1 ?
-    step(a) :                // completion arity
-    step(a, f(c), ...rest)   // transduce arity
-  ;
-};
+const { INIT, STEP, RESULT } = transducer;
+const map = f => next => transducer({
+  init: () => next[INIT](),
+  step: (a, c) => next[STEP](a, f(c)),
+  result: a => next[RESULT](a)
+});
 
 module.exports = map;

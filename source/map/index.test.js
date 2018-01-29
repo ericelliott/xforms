@@ -6,17 +6,21 @@ const concatArray = require('../concat-array');
 const take = require('../take');
 const reduced = require('../reduced');
 const toArray = require('../to-array');
+const transducer = require('../transducer');
+
+const {INIT, STEP, RESULT} = transducer;
 
 describe('map', async should => {
   const { assert } = should('apply a function in transducer context');
 
   {
-    const reducer = map(x => x)(concatArray);
+
+    const xf = map(x => x)(concatArray);
 
     assert({
       given: '[empty arity]',
       should: 'return the initial value',
-      actual: reducer(),
+      actual: xf[INIT](),
       expected: []
     });
   }
@@ -24,12 +28,12 @@ describe('map', async should => {
   {
     const arr = [1, 2, 3];
 
-    const reducer = map(x => x)(concatArray);
+    const xf = map(x => x)(concatArray);
 
     assert({
       given: '[completion arity]',
       should: 'return the reduced value',
-      actual: reducer(arr),
+      actual: xf[RESULT](arr),
       expected: arr
     });
   }
@@ -37,12 +41,12 @@ describe('map', async should => {
   {
     const arr = [2, 4, 6];
 
-    const reducer = map(x => x * 2)(concatArray);
+    const xf = map(x => x * 2)(concatArray);
 
     assert({
       given: '[transducer arity]',
       should: 'return the transformed result',
-      actual: reducer(arr, 4),
+      actual: xf[STEP](arr, 4),
       expected: [2, 4, 6, 8]
     });
   }

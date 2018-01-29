@@ -20,6 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "4.8.0",
+    "ramda": "0.25.0",
     "riteway": "2.0.1",
     "watch": "1.0.2"
   },

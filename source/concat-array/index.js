@@ -1,18 +1,9 @@
-const concatArray = (...args) => {
+const transducer = require('../transducer');
 
-  const [ a = [], c ] = args;
-
-  return args.length === 0 ?
-    // initial
-    a :
-    args.length === 1 ?
-
-    // completion
-    a.valueOf() :
-
-    // reducer
-    a.valueOf().concat([c])
-  ;
-};
+const concatArray = transducer({
+  init: () => [],
+  result: a => a,
+  step: (a, c) => a.concat([c])
+});
 
 module.exports = concatArray;
