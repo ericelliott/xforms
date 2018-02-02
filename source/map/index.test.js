@@ -55,12 +55,12 @@ describe('map', async should => {
     const arr = [2, 4, 6];
     const reducedArr = reduced(arr);
 
-    const reducer = map(x => x * 2)(concatArray);
+    const xf = map(x => x * 2)(concatArray);
 
     assert({
       given: 'reduced with a final value',
       should: 'return the final result',
-      actual: reducer(reducedArr, 4),
+      actual: xf[STEP](reducedArr, 4),
       expected: [2, 4, 6, 8]
     });
   }

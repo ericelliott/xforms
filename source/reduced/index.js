@@ -1,13 +1,5 @@
-const REDUCED = Symbol.for('transducer/reduced');
-const VALUE = Symbol.for('transducer/value');
-
-/*
-{
-  [Symbol.for('transducer/step')]: (a, c) => next.step(a, xform(c))
-  [Symbol.for('transducer/init')]: next.init()
-  [Symbol.for('transducer/result')]: a => next.result(a)
-}
-*/
+const REDUCED = '@@transducer/reduced';
+const VALUE = '@@transducer/value';
 
 const reduced = (
   value
