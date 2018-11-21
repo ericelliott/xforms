@@ -2,15 +2,21 @@ const { describe } = require('riteway');
 
 const reduced = require('../reduced');
 
-describe('reduced', async should => {
-  const { assert } = should('wrap any value in reduced');
-
+describe('reduced', async assert => {
   const x = 20;
 
   assert({
     given: 'a Number',
+    should: 'wrap any value in reduced',
     actual: reduced(x).toString(),
     expected: 'Reduced(20)'
+  });
+
+  assert({
+    given: 'a value',
+    should: 'return the same value from .valueOf()',
+    actual: reduced(x).valueOf(),
+    expected: x
   });
 
   assert({
