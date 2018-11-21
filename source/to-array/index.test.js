@@ -6,8 +6,7 @@ const take = require('../take');
 const map = require('../map');
 const filter = require('../filter');
 
-describe('toArray', async should => {
-  const { assert } = should('provide convenient syntax for transducing to arrays');
+describe('toArray', async assert => {
 
   {
     const arr = [1, 2, 3, 4, 5, 6];

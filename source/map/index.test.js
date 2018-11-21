@@ -7,9 +7,7 @@ const take = require('../take');
 const reduced = require('../reduced');
 const toArray = require('../to-array');
 
-describe('map', async should => {
-  const { assert } = should('apply a function in transducer context');
-
+describe('map', async assert => {
   {
     const reducer = map(x => x)(concatArray);
 

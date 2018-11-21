@@ -6,4 +6,4 @@ require('./loop/index.test.js');
 
 require('./to-array/index.test.js');
 require('./concat-array/index.test.js');
-require('./reduced/index.test.js');
+// require('./reduced/index.test.js');

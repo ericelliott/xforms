@@ -7,8 +7,7 @@ const take = require('../take');
 const chunk = require('../chunk');
 const reduced = require('../reduced');
 
-describe('chunk', async should => {
-  const { assert } = should('chunk sequences into smaller groups');
+describe('chunk', async assert => {
 
   {
     const reducer = chunk(2)(concatArray);

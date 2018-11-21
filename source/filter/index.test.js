@@ -4,14 +4,12 @@ const filter = require('../filter');
 const toArray = require('../to-array');
 const concatArray = require('../concat-array');
 
-describe('filter', async should => {
-  const { assert } = should('should select values matching predicate');
-
+describe('filter', async assert => {
   {
     const reducer = filter(() => true)(concatArray);
 
     assert({
-      given: '[empty arity]',
+      given: 'empty arity',
       should: 'return the empty value',
       actual: reducer(),
       expected: []
@@ -23,7 +21,7 @@ describe('filter', async should => {
     const reducer = filter(() => true)(concatArray);
 
     assert({
-      given: '[completion arity]',
+      given: 'completion arity',
       should: 'return the accumulator',
       actual: reducer(a),
       expected: a
@@ -37,14 +35,14 @@ describe('filter', async should => {
     const reducer = filter(x => x % 2 === 0)(concatArray);
 
     assert({
-      given: '[transducer arity] isEven with even value',
+      given: 'transducer arity: isEven with even value',
       should: 'concat the even value',
       actual: reducer(a, even),
       expected: [2, 4, 6, 8]
     });
 
     assert({
-      given: '[transducer arity] isEven with odd value',
+      given: 'transducer arity: isEven with odd value',
       should: 'reject the odd value',
       actual: reducer(a, odd),
       expected: [2, 4, 6]

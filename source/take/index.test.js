@@ -5,14 +5,12 @@ const take = require('./index.js');
 const toArray = require('../to-array/index.js');
 const reduced = require('../reduced');
 
-describe('take', async should => {
-  const { assert } = should('only call step within limit');
-
+describe('take', async assert => {
   {
     const reducer = take(1)(concatArray);
 
     assert({
-      given: '[initial arity]',
+      given: 'empty arity',
       should: 'return the initial value',
       actual: reducer(),
       expected: []
@@ -24,7 +22,7 @@ describe('take', async should => {
     const reducer = take(1)(concatArray);
 
     assert({
-      given: '[completion arity]',
+      given: 'completion arity',
       should: 'return the accumulated value',
       actual: reducer(a),
       expected: a
@@ -44,7 +42,7 @@ describe('take', async should => {
     const wasCalledWith = reducer(reduced(a))();
 
     assert({
-      given: '[completion arity] a reduced(accumulator)',
+      given: 'completion arity: a reduced(accumulator)',
       should: 'call step with the reduced(accumulator)',
 
       // Now we can see what the spy saw
@@ -53,7 +51,7 @@ describe('take', async should => {
     });
 
     assert({
-      given: '[completion arity] a reduced(accumulator)',
+      given: 'completion arity: a reduced(accumulator)',
       should: 'call step with the completion arity',
       actual: wasCalledWith.length,
       expected: 1
@@ -159,7 +157,7 @@ describe('take', async should => {
 
     assert({
       given: 'a limit of -10 and foldable of length 6',
-      should: 'an empty foldable',
+      should: 'return an empty foldable',
       actual: toArray(xform, arr),
       expected: []
     });
