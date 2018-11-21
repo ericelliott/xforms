@@ -6,8 +6,7 @@ const toArray = require('../to-array');
 
 const loop = require('../loop');
 
-describe('loop', async should => {
-  const { assert } = should('continuously loop values');
+describe('loop', async assert => {
 
   {
     const xform = compose(
@@ -16,6 +15,7 @@ describe('loop', async should => {
 
     assert({
       given: 'concatArray and no arguments',
+      should: 'return an empty array',
       actual: xform(concatArray)(),
       expected: []
     });
@@ -29,6 +29,7 @@ describe('loop', async should => {
 
     assert({
       given: 'no arguments, short array',
+      should: 'continously loop values',
       actual: toArray(xform, arr),
       expected: [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
     });
