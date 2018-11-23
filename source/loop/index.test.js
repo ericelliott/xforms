@@ -1,6 +1,6 @@
 const { describe } = require('riteway');
 
-const concatArray = require('../concat-array');
+const append = require('../append-to-array');
 const compose = require('../compose');
 const toArray = require('../to-array');
 
@@ -14,9 +14,9 @@ describe('loop', async assert => {
     );
 
     assert({
-      given: 'concatArray and no arguments',
+      given: 'append and no arguments',
       should: 'return an empty array',
-      actual: xform(concatArray)(),
+      actual: xform(append)(),
       expected: []
     });
   }

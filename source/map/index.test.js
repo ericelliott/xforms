@@ -2,14 +2,14 @@ const { describe } = require('riteway');
 const compose = require('lodash/fp/compose');
 
 const map = require('../map');
-const concatArray = require('../concat-array');
+const append = require('../append-to-array');
 const take = require('../take');
 const reduced = require('../reduced');
 const toArray = require('../to-array');
 
 describe('map', async assert => {
   {
-    const reducer = map(x => x)(concatArray);
+    const reducer = map(x => x)(append);
 
     assert({
       given: '[empty arity]',
@@ -22,7 +22,7 @@ describe('map', async assert => {
   {
     const arr = [1, 2, 3];
 
-    const reducer = map(x => x)(concatArray);
+    const reducer = map(x => x)(append);
 
     assert({
       given: '[completion arity]',
@@ -35,7 +35,7 @@ describe('map', async assert => {
   {
     const arr = [2, 4, 6];
 
-    const reducer = map(x => x * 2)(concatArray);
+    const reducer = map(x => x * 2)(append);
 
     assert({
       given: '[transducer arity]',
@@ -49,7 +49,7 @@ describe('map', async assert => {
     const arr = [2, 4, 6];
     const reducedArr = reduced(arr);
 
-    const reducer = map(x => x * 2)(concatArray);
+    const reducer = map(x => x * 2)(append);
 
     assert({
       given: 'reduced with a final value',

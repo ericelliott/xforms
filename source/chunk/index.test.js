@@ -1,7 +1,7 @@
 const { describe } = require('riteway');
 const compose = require('lodash/fp/compose');
 
-const concatArray = require('../concat-array');
+const append = require('../append-to-array');
 const toArray = require('../to-array');
 const take = require('../take');
 const chunk = require('../chunk');
@@ -10,7 +10,7 @@ const reduced = require('../reduced');
 describe('chunk', async assert => {
 
   {
-    const reducer = chunk(2)(concatArray);
+    const reducer = chunk(2)(append);
 
     assert({
       given: '[initial arity] no arguments',
