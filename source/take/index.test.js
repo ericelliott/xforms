@@ -1,13 +1,13 @@
 const { describe } = require('riteway');
 
-const concatArray = require('../concat-array/index.js');
-const take = require('./index.js');
-const toArray = require('../to-array/index.js');
+const append = require('../append-to-array');
+const take = require('../take');
+const toArray = require('../to-array');
 const reduced = require('../reduced');
 
 describe('take', async assert => {
   {
-    const reducer = take(1)(concatArray);
+    const reducer = take(1)(append);
 
     assert({
       given: 'empty arity',
@@ -19,7 +19,7 @@ describe('take', async assert => {
 
   {
     const a = [1, 2, 3];
-    const reducer = take(1)(concatArray);
+    const reducer = take(1)(append);
 
     assert({
       given: 'completion arity',
@@ -104,7 +104,7 @@ describe('take', async assert => {
 
   {
     const a = [1, 2];
-    const reducer = take(3, 2)(concatArray);
+    const reducer = take(3, 2)(append);
 
     assert({
       given: 'an accumulator where i < limit',
@@ -116,7 +116,7 @@ describe('take', async assert => {
 
   {
     const a = [1, 2, 3];
-    const reducer = take(10)(concatArray);
+    const reducer = take(10)(append);
     const reducedAcc = reducer(reduced(a), 4);
 
     assert({

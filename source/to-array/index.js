@@ -1,6 +1,6 @@
 const transduce = require('../transduce');
-const concat = require('../concat-array');
+const append = require('../append-to-array');
 
-const toArray = transduce(concat, []);
+const toArray = transduce(append, []);
 
 module.exports = toArray;

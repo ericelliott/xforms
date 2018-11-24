@@ -1,12 +1,10 @@
-const map = f => step => (...args) => {
-  const [a = step(), c, ...rest] = args;
+import transducer from '../transducer';
 
-  return args.length === 0 ?
-    a :                      // empty arity
-    args.length === 1 ?
-    step(a) :                // completion arity
-    step(a, f(c), ...rest)   // transduce arity
-  ;
-};
+const map = f => next => transducer({
+  next,
+  step: (a, c, ...rest) =>
+    next(a, f(c), ...rest)
+});
 
+export default map;
 module.exports = map;

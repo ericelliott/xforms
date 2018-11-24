@@ -2,11 +2,11 @@ const { describe } = require('riteway');
 
 const filter = require('../filter');
 const toArray = require('../to-array');
-const concatArray = require('../concat-array');
+const append = require('../append-to-array');
 
 describe('filter', async assert => {
   {
-    const reducer = filter(() => true)(concatArray);
+    const reducer = filter(() => true)(append);
 
     assert({
       given: 'empty arity',
@@ -18,7 +18,7 @@ describe('filter', async assert => {
 
   {
     const a = [1, 2, 3];
-    const reducer = filter(() => true)(concatArray);
+    const reducer = filter(() => true)(append);
 
     assert({
       given: 'completion arity',
@@ -32,7 +32,7 @@ describe('filter', async assert => {
     const a = [2, 4, 6];
     const even = 8;
     const odd = 7;
-    const reducer = filter(x => x % 2 === 0)(concatArray);
+    const reducer = filter(x => x % 2 === 0)(append);
 
     assert({
       given: 'transducer arity: isEven with even value',

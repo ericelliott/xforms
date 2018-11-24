@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . && echo 'Lint complete.'",
-    "test": "node source/index.test.js && npm run -s lint",
-    "debug-test": "node --inspect-brk source/index.test.js",
+    "test": "node -r esm source/index.test.js && npm run -s lint",
+    "debug-test": "node -r esm --inspect-brk source/index.test.js",
     "watch": "watch 'clear && npm run -s test' source",
     "update": "updtr"
   },
@@ -26,6 +26,7 @@
     "watch": "1.0.2"
   },
   "dependencies": {
+    "esm": "3.0.84",
     "lodash": "4.17.11"
   }
 }
